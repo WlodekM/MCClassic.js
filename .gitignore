@@ -133,3 +133,4 @@ yarn.lock
 # MCCJS
 levels/*
 *.db
+config.ini
