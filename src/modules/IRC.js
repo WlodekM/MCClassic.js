@@ -1,9 +1,9 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 // Types
-const { Message, GatewayIntentBits, Events, Client } = require("discord.js");
+import { Message, GatewayIntentBits, Events, Client } from "discord.js";
 
 
-module.exports.server = function (server, settings) {
+export let server = function (server, settings) {
     console.log("yes s")
     /**
      * @type {Client}
@@ -43,7 +43,7 @@ module.exports.server = function (server, settings) {
     server.irc.bot = this.bot
 }
 
-module.exports.player = function (player, server) {
+export let player = function (player, server) {
     if(!server.settings.irc.enabled) return
     console.log(server.irc.bot.guilds.fetch, 'guilds')
     // console.log(settings.irc.channels, settings.irc.channels.forEach)
@@ -68,9 +68,9 @@ module.exports.player = function (player, server) {
     player.on('connected', () => ircSay(player.username + ' connected'))
     player.on('disconnected', () => ircSay(player.username + ' disconnected'))
 }
-/*const irc = require('irc')
+/*const irc from 'irc'
 
-module.exports.server = function(server, settings) {
+export let server = function(server, settings) {
     this.irc = new irc.Client(this.settings['server'], this.settings.irc.nick, {
         channels: ['#' + this.settings.irc.channel],
         password: this.settings.irc.password,
@@ -83,7 +83,7 @@ module.exports.server = function(server, settings) {
     this.irc.addListener('error', message => console.log('error: ', message))
 }
 
-module.exports.player = function(player, server) {
+export let player = function(player, server) {
     const ircSay = (message) => this.irc.say(this.settings.irc.channel, '[mc] ' + message)
     player.on('chat', ({
         message

@@ -1,42 +1,45 @@
-const Command = require('../command')
+import { Command } from '../command.js';
+import fs from 'fs';
+import { promisify } from 'util';
+import path from 'path';
 
-const fs = require("fs");
-const util = require("util");
-const promisify = util.promisify;
 const readdir = promisify(fs.readdir);
 
-// TODO: Load on server startup instead of when player joins?
-
-module.exports.player = (player, server) => {
-    server.commands = new Command({})
+export const player = async (player, server) => {
+    server.commands = new Command({});
     let i = 1;
 
-    readdir(__dirname + "/../commands/", (err, files) => {
-        if (err) return console.error(err);
+    try {
+        const files = await readdir(path.resolve(__dirname, "../commands/"));
+        for (const file of files) {
+            if (!file.endsWith(".js")) continue;
 
-        files.forEach((file) => {
-            if (!file.endsWith(".js")) return;
-
-            var commands = require(`../commands/${file}`);
+            const commands = await import(`../commands/${file}`);
             commands.AddCommand(player, server);
             let commandName = file.split(".")[0];
             i++;
-        });
-    });
+        }
+    } catch (err) {
+        console.error(err);
+    }
 
     server.handleCommand = (str) => {
         try {
-            const res = server.commands.use(str, player.op)
-            if (res) player.chat(res)
+            const res = server.commands.use(str, player.op);
+            if (res) player.chat(res);
         } catch (err) {
             if (err) {
-                player.chat(`${server.color.red}Error: ${err.message}`)
-                console.log(`Error: ${err.stack}`)
+                player.chat(`${server.color.red}Error: ${err.message}`);
+                console.log(`Error: ${err.stack}`);
             } else {
                 setTimeout(() => {
-                    throw err
-                }, 0)
+                    throw err;
+                }, 0);
             }
         }
-    }
-}
+    };
+};
+
+// Helper function to get __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);

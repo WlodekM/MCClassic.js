@@ -1,21 +1,29 @@
-const {
+import {
     join
-} = require('path')
+} from 'path'
+// const EventEmitter = require('events').EventEmitter
+// const requireIndex = require('requireindex')
+// const modules = requireIndex(join(__dirname))
+// const Logger = require('js-logger')
+// const crypto = require('crypto')
+// const MD5 = require('md5.js')
+// const zlib = require('zlib')
 
-const EventEmitter = require('events').EventEmitter
-const requireIndex = require('requireindex')
-const modules = requireIndex(join(__dirname))
-const Logger = require('js-logger')
-const crypto = require('crypto')
-const MD5 = require('md5.js')
-const zlib = require('zlib')
+import { EventEmitter } from 'events'
+import fs               from "fs"
+import requireIndex     from 'requireindex'
+import Logger           from 'js-logger'
+import crypto           from 'crypto'
+import MD5              from 'md5.js'
+import zlib             from 'zlib'
+const modules     = requireIndex(join(__dirname))
 
-module.exports.server = (server, options) => {
+export let server = (server, options) => {
     server.pid = process.pid
     server.log = Logger
     server.log.useDefaults()
 
-    server.log.info(`Starting MCScript server version 0.30c (${require('../../package.json').version})`)
+    server.log.info(`Starting MCScript server version 0.30c (${JSON.parse(fs.readFileSync('../../package.json')).version})`)
 
     server.salt = crypto.randomBytes(16).toString('hex')
     server.online_players = 0
@@ -54,7 +62,7 @@ module.exports.server = (server, options) => {
     server.heartbeat()
 }
 
-module.exports.player = (player, server, settings) => {
+export let player = (player, server, settings) => {
     player.login = () => {
         player._client.on('error', (err) => {
             server.log.info(err.stack)

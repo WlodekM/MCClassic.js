@@ -1,8 +1,8 @@
-const World = require('../world')
-const Vec3 = require('vec3')
-const fs = require('fs')
+import World from '../world'
+import Vec3 from 'vec3'
+import fs from 'fs'
 
-module.exports.server = async (server) => {
+export let server = async (server) => {
     server.worlds = {}
     // server.worlds.main = new World({
     //     x: 256,

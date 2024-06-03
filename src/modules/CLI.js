@@ -1,4 +1,4 @@
-module.exports.server = (server) => {
+export let server = (server) => {
     const readline = require('readline').createInterface({
         input: process.stdin,
         output: process.stdout

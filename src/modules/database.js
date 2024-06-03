@@ -1,11 +1,11 @@
-const fs = require('fs')
+import fs from 'fs'
 
 const serverDBFile = './MCScript.db'
 const playerDBFile = './Players.db'
 
-const sql = require('better-sqlite3');
+import sql from 'better-sqlite3';
 
-module.exports.server = (server) => {
+export let server = (server) => {
     let serverDB = new sql(serverDBFile, sql.OPEN_READWRITE, (err) => {
         if (err) {
             console.error(err.message);

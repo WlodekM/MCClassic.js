@@ -1,17 +1,17 @@
-const {
+import {
     createServer
-} = require('minecraft-classic-protocol')
-const {
+} from 'minecraft-classic-protocol'
+import {
     protocol
-} = require('minecraft-classic-protocol-extension')
-const {
+} from 'minecraft-classic-protocol-extension'
+import {
     join
-} = require('path')
+} from 'path'
 
-const EventEmitter = require('events').EventEmitter
-const requireIndex = require('requireindex')
+import { EventEmitter } from 'events'
+import requireIndex from 'requireindex'
 
-module.exports.createServer = async (options = {}) => {
+export let createServer = async (options = {}) => {
     options.customPackets = protocol
 
     const server = new MCServer()

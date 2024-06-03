@@ -1,4 +1,4 @@
-module.exports.player = (player) => {
+export let player = (player) => {
     player._client.on('ext_info', (packet) => {
         player.extension_count = packet.extension_count
         player.app_name = packet.app_name

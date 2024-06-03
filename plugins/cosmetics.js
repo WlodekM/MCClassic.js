@@ -1,4 +1,4 @@
-module.exports.server = (server, settings) => {
+export let server = (server, settings) => {
     var methods = {
         AddCommand: function(player, server) {
             player.commands.add({

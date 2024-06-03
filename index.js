@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const {
+import {
     createServer
-} = require('./client.js')
-const fs = require('fs')
-const ini = require('ini')
+} from './client.js'
+import fs from 'fs'
+import ini from 'ini'
 
 const config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 

@@ -1,4 +1,4 @@
-module.exports.server = (server) => {
+export let server = (server) => {
     server.players = []
     server.entityID = 1 // 0 is reserved for console
 

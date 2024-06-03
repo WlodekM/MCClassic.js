@@ -1,18 +1,18 @@
-const {
+import {
     readFile,
     writeFile,
     fstat,
     existsSync,
     writeFileSync,
     readFileSync,
-} = require('fs')
-const {
+} from 'fs'
+import {
     gunzip,
     gzip
-} = require('zlib')
-const {
+} from 'zlib'
+import {
     promisify
-} = require('util')
+} from 'util'
 
 const [
     readFileAsync,

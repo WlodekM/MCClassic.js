@@ -3,8 +3,9 @@
   "version": "1.0.1",
   "description": "A Minecraft Classic/ClassiCube server software written in JavaScript",
   "main": "index.js",
-  "author": "Venk",
+  "author": "WlodekM",
   "bin": "./index.js",
+  "type": "module",
   "scripts": {
     "start": "node -r dotenv/config index.js"
   },

@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
-module.exports.server = (server, settings) => {
+export let server = (server, settings) => {
     if (settings.public === true) setInterval(() => server.heartbeat(), 45000)
 
     server.heartbeat = async () => {
