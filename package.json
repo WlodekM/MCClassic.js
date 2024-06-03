@@ -13,6 +13,7 @@
     "better-sqlite3": "^7.4.3",
     "discord.js": "^14.15.2",
     "envfile": "^6.14.0",
+    "file-uri-to-path": "^2.0.0",
     "geoip-lite": "^1.4.2",
     "irc": "^0.5.2",
     "js-logger": "^1.4.1",

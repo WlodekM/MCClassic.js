@@ -1,4 +1,4 @@
-import World from '../world'
+import World from '../world.js'
 import Vec3 from 'vec3'
 import fs from 'fs'
 

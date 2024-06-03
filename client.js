@@ -7,8 +7,10 @@ import {
     join,
     dirname
 } from 'path'
+import uri2path from "file-uri-to-path"
 
-const __dirname = import.meta.dirname;
+const __dirname = dirname(uri2path(import.meta.url.replace(/file:\/\/\/[A-z]:\//, 'file:///')));
+console.log(__dirname, import.meta.url, import.meta.url.replace(/file:\/\/\/[A-z]:\//, 'file://\\'))
 
 import { EventEmitter } from 'events'
 import requireIndex from './lib/ri.js'
