@@ -3,6 +3,8 @@ import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
 
+const __dirname = import.meta.dirname;
+
 const readdir = promisify(fs.readdir);
 
 export const player = async (player, server) => {
@@ -39,7 +41,3 @@ export const player = async (player, server) => {
         }
     };
 };
-
-// Helper function to get __dirname in ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);

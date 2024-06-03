@@ -1,6 +1,4 @@
-import {
-    join
-} from 'path'
+import path from 'path'
 // const EventEmitter = require('events').EventEmitter
 // const requireIndex = require('requireindex')
 // const modules = requireIndex(join(__dirname))
@@ -10,13 +8,14 @@ import {
 // const zlib = require('zlib')
 
 import { EventEmitter } from 'events'
+const __dirname = import.meta.dirname;
 import fs               from "fs"
-import requireIndex     from 'requireindex'
+import requireIndex     from '../../lib/ri.js'
 import Logger           from 'js-logger'
 import crypto           from 'crypto'
 import MD5              from 'md5.js'
 import zlib             from 'zlib'
-const modules     = requireIndex(join(__dirname))
+const modules     = requireIndex(path.join(__dirname))
 
 export let server = (server, options) => {
     server.pid = process.pid

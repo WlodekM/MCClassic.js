@@ -1,15 +1,17 @@
-import {
-    createServer
-} from 'minecraft-classic-protocol'
+import mcp from 'minecraft-classic-protocol'
+const createServerMCP = mcp.createServer
 import {
     protocol
 } from 'minecraft-classic-protocol-extension'
 import {
-    join
+    join,
+    dirname
 } from 'path'
 
+const __dirname = import.meta.dirname;
+
 import { EventEmitter } from 'events'
-import requireIndex from 'requireindex'
+import requireIndex from './lib/ri.js'
 
 export let createServer = async (options = {}) => {
     options.customPackets = protocol
@@ -27,7 +29,7 @@ class MCServer extends EventEmitter {
     }
 
     connect(options) {
-        this._server = createServer(options)
+        this._server = createServerMCP(options)
         const modules = requireIndex(join(__dirname, 'src', 'modules'))
 
         Object.keys(modules)

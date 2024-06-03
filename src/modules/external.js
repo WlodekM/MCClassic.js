@@ -1,7 +1,5 @@
-import { fileURLToPath, pathToFileURL } from 'url';
 import path from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = import.meta.dirname;
 
 
 export let server = (server, settings) => {
