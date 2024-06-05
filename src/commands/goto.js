@@ -10,8 +10,6 @@ export const AddCommand = function (player, server) {
         action(params) {
             if (params.length === 0) return `${server.color.red}No arguments specified.`
 
-            // console.log(JSON.stringify(params))
-
             if (typeof params == "string") params = [params]
 
             try {
@@ -22,12 +20,10 @@ export const AddCommand = function (player, server) {
 
             player.level = params[0]
             player._client.write('level_initialize', {})
-            console.log(server.worlds[player.level].dump())
 
             const compressedMap = zlib.gzipSync(server.worlds[player.level].dump())
 
             for (let i = 0; i < compressedMap.length; i += 1024) {
-                console.log(i, compressedMap.length, compressedMap.slice(i, Math.min(i + 1024, compressedMap.length)))
                 player._client.write('level_data_chunk', {
                     chunk_data: compressedMap.slice(i, Math.min(i + 1024, compressedMap.length)),
                     percent_complete: i === 0 ? 0 : Math.ceil(i / compressedMap.length * 100)

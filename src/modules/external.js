@@ -1,5 +1,16 @@
 import path from 'path';
 import { __dirname } from "../../dirname.js"
+import { pathToFileURL } from 'url';
+/**
+ * Converts an absolute file path to a file URI.
+ * @param {string} filePath - The absolute file path to convert.
+ * @returns {string} The file URI.
+ */
+function convertPathToFileURI(filePath) {
+  // Convert the file path to a file URI
+  const fileURI = pathToFileURL(filePath).href;
+  return fileURI;
+}
 
 
 export let server = (server, settings) => {
@@ -25,17 +36,17 @@ export let server = (server, settings) => {
         if (settings.plugins[p].disabled) return
         let pluginPath;
         try {
-            pluginPath = path.resolve(__dirname, p)
+            pluginPath = path.resolve(__dirname, 'plugins', `${p/*5*/}.js`)
         } catch (err) {
             try {
-                pluginPath = path.resolve(__dirname, `../../plugins/${p}`)
+                pluginPath = path.resolve(__dirname, `plugins/${p}`)
             } catch (err) {
                 throw new Error(`Cannot find plugin "${p}"`)
             }
         }
         try {
-            const pluginModule = await import(pluginPath)
-            server.addPlugin(p, pluginModule.default, settings.plugins[p])
+            const pluginModule = await import(convertPathToFileURI(pluginPath))
+            server.addPlugin(p, pluginModule, settings.plugins[p])
         } catch (err) {
             throw new Error(`Error loading plugin "${p}": ${err.message}`)
         }

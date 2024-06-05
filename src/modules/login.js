@@ -8,15 +8,13 @@ import Logger           from 'js-logger'
 import crypto           from 'crypto'
 import MD5              from 'md5.js'
 import zlib             from 'zlib'
-console.log(path.join(__dirname))
-const modules = requireIndex(path.join(__dirname, 'src', 'modules'))
 
 export let server = (server, options) => {
     server.pid = process.pid
     server.log = Logger
     server.log.useDefaults()
 
-    server.log.info(`Starting MCScript server version 0.30c (${JSON.parse(fs.readFileSync('../../package.json')).version})`)
+    server.log.info(`Starting MCScript server version 0.30c (${JSON.parse(fs.readFileSync('./package.json')).version})`)
 
     server.salt = crypto.randomBytes(16).toString('hex')
     server.online_players = 0
@@ -42,10 +40,10 @@ export let server = (server, options) => {
         if (client.socket.listeners('end').length === 0) return
         const player = new EventEmitter()
         player._client = client
-
-        Object.keys(modules)
-            .filter(moduleName => modules[moduleName].player !== undefined)
-            .forEach(moduleName => {modules[moduleName].player(player, server, options)})
+        
+        Object.keys(server.modules)
+            .filter(moduleName => server.modules[moduleName].player !== undefined)
+            .forEach(moduleName => {server.modules[moduleName].player(player, server, options)})
 
         server.emit('newPlayer', player)
         player.emit('asap')

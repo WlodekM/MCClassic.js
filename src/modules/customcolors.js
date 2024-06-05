@@ -1,5 +1,4 @@
 export let player = (player, server) => {
-    // console.log(player)
     /*server.on('login', (client) => {
         if (client.socket.listeners('end').length === 0) return
         import player = new EventEmitter()

@@ -12,3 +12,7 @@ export let server = (server, settings) => {
         }
     }
 }
+
+export const settings = {
+    priority: 0
+}

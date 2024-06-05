@@ -5,7 +5,6 @@ export let player = (player, server) => {
     let x, y, z, yaw, pitch
     const db = sql('MCScript.db')
     const row = db.prepare('SELECT * FROM levels WHERE name = ?').get("level")
-    console.log(row.name + " " + row.spawn)
     var coords = row.spawn.split(' ')
     x = coords[0]
     y = coords[1]
