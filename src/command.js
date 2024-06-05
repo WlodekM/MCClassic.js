@@ -1,4 +1,4 @@
-module.exports = class Command {
+export class Command {
     constructor(params, parent) {
         this.params = params
         this.parent = parent

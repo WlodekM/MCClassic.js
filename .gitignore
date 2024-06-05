@@ -134,3 +134,4 @@ yarn.lock
 levels/*
 *.db
 config.ini
+config.ini

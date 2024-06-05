@@ -1,17 +1,17 @@
-const {
-    createServer
-} = require('minecraft-classic-protocol')
-const {
+import mcp from 'minecraft-classic-protocol'
+const createServerMCP = mcp.createServer
+import {
     protocol
-} = require('minecraft-classic-protocol-extension')
-const {
-    join
-} = require('path')
+} from 'minecraft-classic-protocol-extension'
+import {
+    join,
+} from 'path'
+import { __dirname } from "./dirname.js"
 
-const EventEmitter = require('events').EventEmitter
-const requireIndex = require('requireindex')
+import { EventEmitter } from 'events'
+import requireIndex from './lib/ri.js'
 
-module.exports.createServer = async (options = {}) => {
+export let createServer = async (options = {}) => {
     options.customPackets = protocol
 
     const server = new MCServer()
@@ -26,19 +26,24 @@ class MCServer extends EventEmitter {
         this._server = null
     }
 
-    connect(options) {
-        this._server = createServer(options)
-        const modules = requireIndex(join(__dirname, 'src', 'modules'))
+    async connect(options) {
+        this._server = createServerMCP(options)
+        this.settings = options
 
-        Object.keys(modules)
+        const modules = await requireIndex(join(__dirname, 'src', 'modules'))
+        this.modules = modules
+
+        let sortedModules = Object.keys(modules)
             .filter(moduleName => modules[moduleName].server !== undefined)
-            .forEach(moduleName => modules[moduleName].server(this, options))
+            .sort((a, b) => {(a?.settings?.priority ?? 1) - (b?.settings?.priority ?? 1)});
+        
+        for (let i = 0; i < sortedModules.length; i++) {
+            const moduleName = sortedModules[i]
+            modules[moduleName].server(this, options)
+        }
 
-        const plugins = requireIndex(join(__dirname, '', 'plugins'))
-
-        Object.keys(plugins)
-            .filter(pluginName => plugins[pluginName].server !== undefined)
-            .forEach(pluginName => plugins[pluginName].server(this, options))
+        const plugins = await requireIndex(join(__dirname, '', 'plugins'))
+        this.plugins = plugins
 
         this._server.on('error', error => this.emit('error', error))
         this._server.on('clientError', error => this.emit('error', error))

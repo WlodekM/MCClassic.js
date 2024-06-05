@@ -1,10 +1,12 @@
-module.exports.server = (server) => {
-    const readline = require('readline').createInterface({
+import readline from "readline"
+
+export let server = (server) => {
+    const readlineInterface = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     })
 
-    readline.on('line', (input) => {
+    readlineInterface.on('line', (input) => {
         console.log("[Console] " + input.split('%').join('&'))
         server._writeAll('message', {
             player_id: 0,

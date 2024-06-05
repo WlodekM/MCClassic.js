@@ -1,3 +1,3 @@
-module.exports.server = (server, settings) => {
+export let server = (server, settings) => {
 
 }

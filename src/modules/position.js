@@ -1,4 +1,4 @@
-module.exports.player = (player, server) => {
+export let player = (player, server) => {
     player._client.on('position', (packet) => {
         player.positionUpdate(packet.x, packet.y, packet.z)
         player.orientationUpdate(packet.yaw, packet.pitch)
