@@ -1,5 +1,5 @@
 import path from 'path';
-const __dirname = import.meta.dirname;
+import { __dirname } from "../../dirname.js"
 
 
 export let server = (server, settings) => {

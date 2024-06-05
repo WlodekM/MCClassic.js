@@ -5,12 +5,8 @@ import {
 } from 'minecraft-classic-protocol-extension'
 import {
     join,
-    dirname
 } from 'path'
-import uri2path from "file-uri-to-path"
-
-const __dirname = dirname(uri2path(import.meta.url.replace(/file:\/\/\/[A-z]:\//, 'file:///')));
-console.log(__dirname, import.meta.url, import.meta.url.replace(/file:\/\/\/[A-z]:\//, 'file://\\'))
+import { __dirname } from "./dirname.js"
 
 import { EventEmitter } from 'events'
 import requireIndex from './lib/ri.js'
@@ -32,6 +28,8 @@ class MCServer extends EventEmitter {
 
     connect(options) {
         this._server = createServerMCP(options)
+        console.debug(join(__dirname, 'src', 'modules'), join(__dirname, '', 'plugins'))
+
         const modules = requireIndex(join(__dirname, 'src', 'modules'))
 
         Object.keys(modules)
@@ -43,6 +41,7 @@ class MCServer extends EventEmitter {
         Object.keys(plugins)
             .filter(pluginName => plugins[pluginName].server !== undefined)
             .forEach(pluginName => plugins[pluginName].server(this, options))
+
 
         this._server.on('error', error => this.emit('error', error))
         this._server.on('clientError', error => this.emit('error', error))

@@ -1,16 +1,7 @@
 import path from 'path'
-// const EventEmitter = require('events').EventEmitter
-// const requireIndex = require('requireindex')
-// const modules = requireIndex(join(__dirname))
-// const Logger = require('js-logger')
-// const crypto = require('crypto')
-// const MD5 = require('md5.js')
-// const zlib = require('zlib')
 
 import { EventEmitter } from 'events'
-import uri2path from "file-uri-to-path"
-
-const __dirname = path.dirname(uri2path(import.meta.url));
+import { __dirname } from "../../dirname.js"
 import fs               from "fs"
 import requireIndex     from '../../lib/ri.js'
 import Logger           from 'js-logger'
@@ -18,7 +9,7 @@ import crypto           from 'crypto'
 import MD5              from 'md5.js'
 import zlib             from 'zlib'
 console.log(path.join(__dirname))
-const modules = requireIndex(path.join(__dirname))
+const modules = requireIndex(path.join(__dirname, 'src', 'modules'))
 
 export let server = (server, options) => {
     server.pid = process.pid

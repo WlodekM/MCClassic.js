@@ -2,8 +2,7 @@ import { Command } from '../command.js';
 import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
-
-const __dirname = import.meta.dirname;
+import { __dirname } from "../../dirname.js"
 
 const readdir = promisify(fs.readdir);
 
