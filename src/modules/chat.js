@@ -62,3 +62,7 @@ export let server = (server) => {
         'white': '&f'
     }
 }
+
+export const settings = {
+    priority: 2
+}
