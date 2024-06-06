@@ -36,14 +36,21 @@ export let server = (server, options) => {
             client.on('error', error => server.emit('clientError', client, error))
         })
 
-    server._server.on('login', (client) => {
+    server._server.on('login', async (client) => {
         if (client.socket.listeners('end').length === 0) return
         const player = new EventEmitter()
         player._client = client
-        
-        Object.keys(server.modules)
+
+        let sortedModules = Object.keys(server.modules)
             .filter(moduleName => server.modules[moduleName].player !== undefined)
-            .forEach(moduleName => {server.modules[moduleName].player(player, server, options)})
+            .sort((a, b) => {return (server.modules[a]?.settings?.priority ?? 1) - (server.modules[b]?.settings?.priority ?? 1)})
+            //.forEach(moduleName => {console.log(`loading module player func of moduel ${moduleName}`);server.modules[moduleName].player(player, server, options)})
+
+        for (let i = 0; i < sortedModules.length; i++) {
+            const moduleName = sortedModules[i];
+            console.log(`loading module player func of moduel ${moduleName}`);
+            await server.modules[moduleName].player(player, server, options)
+        }
 
         server.emit('newPlayer', player)
         player.emit('asap')

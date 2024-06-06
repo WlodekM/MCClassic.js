@@ -33,6 +33,7 @@ export let server = (server, settings) => {
     }
 
     const loadPlugin = async (p) => {
+        console.info(`loading plugin ${p}`)
         if (settings.plugins[p].disabled) return
         let pluginPath;
         try {
@@ -60,7 +61,7 @@ export let server = (server, settings) => {
 
     server.on('asap', () => {
         Object.keys(server.plugins).map((p) => {
-            server.log.info(`Plugin "${server.plugins[p].name}" loaded!`)
+            server.log.info(`Plugin "${p}" loaded!`)
         })
     })
 

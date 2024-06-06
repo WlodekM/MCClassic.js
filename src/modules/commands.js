@@ -7,15 +7,17 @@ import { __dirname } from "../../dirname.js"
 const readdir = promisify(fs.readdir);
 
 export const player = async (player, server) => {
+    console.debug("uh", path.resolve(__dirname, "src/commands/"))
     server.commands = new Command({});
     let i = 1;
 
     try {
-        const files = await readdir(path.resolve(__dirname, "../commands/"));
+        const files = await readdir(path.resolve(__dirname, "src/commands/"));
         for (const file of files) {
             if (!file.endsWith(".js")) continue;
 
             const commands = await import(`../commands/${file}`);
+            console.log(`../commands/${file}`, commands)
             commands.AddCommand(player, server);
             let commandName = file.split(".")[0];
             i++;
@@ -39,4 +41,9 @@ export const player = async (player, server) => {
             }
         }
     };
+    console.log("server.handleCommand", server.handleCommand)
 };
+
+export const settings = {
+    priority: -1
+}
