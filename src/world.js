@@ -1,18 +1,6 @@
-const {
-    readFile,
-    writeFile,
-    fstat,
-    existsSync,
-    writeFileSync,
-    readFileSync,
-} = require('fs')
-const {
-    gunzip,
-    gzip
-} = require('zlib')
-const {
-    promisify
-} = require('util')
+import fs from 'fs';
+import zlib from 'zlib'
+import util from 'util'
 
 const [
     readFileAsync,
@@ -20,15 +8,15 @@ const [
     gunzipAsync,
     gzipAsync
 ] = [
-        promisify(readFile),
-        promisify(writeFile),
-        promisify(gunzip),
-        promisify(gzip)
+        util.promisify(fs.readFile),
+        util.promisify(fs.writeFile),
+        util.promisify(zlib.gunzip),
+        util.promisify(zlib.gzip)
     ]
 
-module.exports = class World {
+export default class World {
     constructor(size, path = './levels/level.dat') {
-        if(!existsSync(path.split(".dat").join(".json"))) writeFileSync(path.split(".dat").join(".json"), JSON.stringify({
+        if(!fs.existsSync(path.split(".dat").join(".json"))) fs.writeFileSync(path.split(".dat").join(".json"), JSON.stringify({
             size: size ?? {
                 x: 256,
                 y: 64,
@@ -36,7 +24,7 @@ module.exports = class World {
             },
             localChat: false,
         }))
-        let config = JSON.parse(readFileSync(path.split(".dat").join(".json")))
+        let config = JSON.parse(fs.readFileSync(path.split(".dat").join(".json")))
         for (const key in config) {
             this[key] = config[key];
         }

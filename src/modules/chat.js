@@ -1,4 +1,4 @@
-module.exports.player = (player, server) => {
+export let player = (player, server) => {
     player._client.on('message', (packet) => {
         if (packet.message.split('')[0] === '/') {
             server.handleCommand(packet.message)
@@ -25,7 +25,7 @@ module.exports.player = (player, server) => {
     }
 }
 
-module.exports.server = (server) => {
+export let server = (server) => {
     server.broadcast = (message) => {
         server._writeAll('message', {
             player_id: 0,
@@ -61,4 +61,8 @@ module.exports.server = (server) => {
         'yellow': '&e',
         'white': '&f'
     }
+}
+
+export const settings = {
+    priority: 2
 }

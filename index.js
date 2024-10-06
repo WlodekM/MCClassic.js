@@ -1,31 +1,32 @@
 #!/usr/bin/env node
 
-const {
+import {
     createServer
-} = require('./client.js')
-const fs = require('fs')
-const ini = require('ini')
+} from './client.js'
+import fs from 'fs'
+import ini from 'ini'
 
 const config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 
-function exitHandler(options, exitCode) {
-    if (options.cleanup) console.log('clean');
-    if (exitCode || exitCode === 0) console.log(exitCode);
-    if (options.exit) process.exit();
-}
+//TODO - Implement smart saving l8r (don't save on each block update)
+// function exitHandler(options, exitCode) {
+//     if (options.cleanup) console.log('clean');
+//     if (exitCode || exitCode === 0) console.log(exitCode);
+//     if (options.exit) process.exit();
+// }
 
-// do something when app is closing
-process.on('exit', exitHandler.bind(null,{cleanup:true}));
+// // do something when app is closing
+// process.on('exit', exitHandler.bind(null,{cleanup:true}));
 
-// catches ctrl+c event
-process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+// // catches ctrl+c event
+// process.on('SIGINT', exitHandler.bind(null, {exit:true}));
 
-// catches "kill pid" (for example: nodemon restart)
-process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
-process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
+// // catches "kill pid" (for example: nodemon restart)
+// process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
+// process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
 
-// catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+// // catches uncaught exceptions
+// process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 createServer({
     'port': config.general.port,

@@ -1,10 +1,10 @@
-const Vec3 = require('vec3')
+import sql from 'better-sqlite3'
+import Vec3 from 'vec3'
 
-module.exports.player = (player, server) => {
+export let player = (player, server) => {
     let x, y, z, yaw, pitch
-    const db = require('better-sqlite3')('MCScript.db')
+    const db = sql('MCScript.db')
     const row = db.prepare('SELECT * FROM levels WHERE name = ?').get("level")
-    console.log(row.name + " " + row.spawn)
     var coords = row.spawn.split(' ')
     x = coords[0]
     y = coords[1]
@@ -77,7 +77,6 @@ module.exports.player = (player, server) => {
 
         const path = './Players.db'
 
-        const sql = require('better-sqlite3');
         const createTable = "CREATE TABLE IF NOT EXISTS players ('username' VARCHAR, 'nick' VARCHAR, 'title' VARCHAR, 'model' VARCHAR, 'firstJoin' TIMESTAMP, 'lastJoin' TIMESTAMP, 'money' INT)"
 
         let db = new sql(path, sql.OPEN_READWRITE, (err) => {
@@ -111,7 +110,7 @@ module.exports.player = (player, server) => {
 
             console.log(`Updated database file (Players.db)`)
 
-            const database = require('better-sqlite3')('Players.db')
+            const database = sql('Players.db')
             const row = database.prepare('SELECT * FROM players WHERE username = ?').get(player.username)
 
             player.nick = row.nick

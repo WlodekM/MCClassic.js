@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
-module.exports.server = (server, settings) => {
+export let server = (server, settings) => {
     if (settings.public === true) setInterval(() => server.heartbeat(), 45000)
 
     server.heartbeat = async () => {
@@ -11,4 +11,8 @@ module.exports.server = (server, settings) => {
             if ((body && body.errors[0][0]) && body.errors[0][0].startsWith('Port')) console.log(`Port ${settings.port} not open, you may need to port forward it.`)
         }
     }
+}
+
+export const settings = {
+    priority: 0
 }

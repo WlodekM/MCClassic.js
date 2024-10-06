@@ -1,8 +1,7 @@
-module.exports.player = (player, server) => {
-    // console.log(player)
+export let player = (player, server) => {
     /*server.on('login', (client) => {
         if (client.socket.listeners('end').length === 0) return
-        const player = new EventEmitter()
+        import player = new EventEmitter()
         player._client = client
 
         player.chat("hi")
@@ -35,7 +34,7 @@ module.exports.player = (player, server) => {
             player.chat("Your nick is currently: " + player.nick)
 
             const path = './Players.db'
-            const sql = require('better-sqlite3');
+            const sql from 'better-sqlite3';
 
             let db = new sql(path, sql.OPEN_READWRITE, (err) => {
                 if (err) {

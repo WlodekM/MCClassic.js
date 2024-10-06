@@ -1,6 +1,6 @@
-const Vec3 = require('vec3')
+import Vec3 from 'vec3'
 
-module.exports.player = (player, server) => {
+export let player = (player, server) => {
     player._client.on('set_block', (packet) => {
         server.worlds[player.level].save().then(() => { console.log("saved level") })
         if (packet.mode === 0x01) {
@@ -11,7 +11,7 @@ module.exports.player = (player, server) => {
     })
 }
 
-module.exports.blockData = {
+export let blockData = {
     Air: {
         id: 0,
         hex: 0x00,
@@ -34,7 +34,7 @@ module.exports.blockData = {
     // }
 }
 
-module.exports.server = (server) => {
+export let server = (server) => {
     server.setBlock = (coords, blockType, levelName) => {
         server.worlds[levelName].setBlock(new Vec3(coords.x, coords.y, coords.z), blockType)
 

@@ -1,21 +1,20 @@
-const {
-    join
-} = require('path')
+import path from 'path'
 
-const EventEmitter = require('events').EventEmitter
-const requireIndex = require('requireindex')
-const modules = requireIndex(join(__dirname))
-const Logger = require('js-logger')
-const crypto = require('crypto')
-const MD5 = require('md5.js')
-const zlib = require('zlib')
+import { EventEmitter } from 'events'
+import { __dirname } from "../../dirname.js"
+import fs               from "fs"
+import requireIndex     from '../../lib/ri.js'
+import Logger           from 'js-logger'
+import crypto           from 'crypto'
+import MD5              from 'md5.js'
+import zlib             from 'zlib'
 
-module.exports.server = (server, options) => {
+export let server = (server, options) => {
     server.pid = process.pid
     server.log = Logger
     server.log.useDefaults()
 
-    server.log.info(`Starting MCScript server version 0.30c (${require('../../package.json').version})`)
+    server.log.info(`Starting MCScript server version 0.30c (${JSON.parse(fs.readFileSync('./package.json')).version})`)
 
     server.salt = crypto.randomBytes(16).toString('hex')
     server.online_players = 0
@@ -37,14 +36,21 @@ module.exports.server = (server, options) => {
             client.on('error', error => server.emit('clientError', client, error))
         })
 
-    server._server.on('login', (client) => {
+    server._server.on('login', async (client) => {
         if (client.socket.listeners('end').length === 0) return
         const player = new EventEmitter()
         player._client = client
 
-        Object.keys(modules)
-            .filter(moduleName => modules[moduleName].player !== undefined)
-            .forEach(moduleName => {modules[moduleName].player(player, server, options)})
+        let sortedModules = Object.keys(server.modules)
+            .filter(moduleName => server.modules[moduleName].player !== undefined)
+            .sort((a, b) => {return (server.modules[a]?.settings?.priority ?? 1) - (server.modules[b]?.settings?.priority ?? 1)})
+            //.forEach(moduleName => {console.log(`loading module player func of moduel ${moduleName}`);server.modules[moduleName].player(player, server, options)})
+
+        for (let i = 0; i < sortedModules.length; i++) {
+            const moduleName = sortedModules[i];
+            console.log(`loading module player func of moduel ${moduleName}`);
+            await server.modules[moduleName].player(player, server, options)
+        }
 
         server.emit('newPlayer', player)
         player.emit('asap')
@@ -54,7 +60,7 @@ module.exports.server = (server, options) => {
     server.heartbeat()
 }
 
-module.exports.player = (player, server, settings) => {
+export let player = (player, server, settings) => {
     player.login = () => {
         player._client.on('error', (err) => {
             server.log.info(err.stack)
