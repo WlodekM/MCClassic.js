@@ -1,5 +1,4 @@
-import mcp from 'minecraft-classic-protocol'
-const createServerMCP = mcp.createServer
+import { createServer as createServerMCP } from 'minecraft-classic-protocol';
 import {
     protocol
 } from 'minecraft-classic-protocol-extension'
