@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 
 export const AddCommand = function (player, server) {
     server.commands.add({

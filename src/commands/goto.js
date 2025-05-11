@@ -1,4 +1,4 @@
-import fs from "fs"
+import fs from "node:fs"
 import zlib from 'zlib'
 
 export const AddCommand = function (player, server) {
@@ -46,7 +46,7 @@ export const AddCommand = function (player, server) {
                 y_size: server.worlds[player.level].size.y,
                 z_size: server.worlds[player.level].size.z,
             })
-            // player.spawn()
+            player.spawnAgain()
         }
     })
 }

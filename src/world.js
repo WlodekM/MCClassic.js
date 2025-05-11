@@ -1,6 +1,8 @@
-import fs from 'fs';
-import zlib from 'zlib'
-import util from 'util'
+import fs from 'node:fs';
+import zlib from 'node:zlib'
+import util from 'node:util'
+
+/* the world class */
 
 const [
     readFileAsync,

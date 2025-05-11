@@ -135,3 +135,6 @@ levels/*
 *.db
 config.ini
 config.ini
+
+pnpm*
+bun.lockb

@@ -1,7 +1,7 @@
 import { Command } from '../command.js';
-import fs from 'fs';
-import { promisify } from 'util';
-import path from 'path';
+import fs from 'node:fs';
+import { promisify } from 'node:util';
+import path from 'node:path';
 import { __dirname } from "../../dirname.js"
 
 const readdir = promisify(fs.readdir);

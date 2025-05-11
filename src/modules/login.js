@@ -1,13 +1,13 @@
-import path from 'path'
+import path from 'node:path'
 
-import { EventEmitter } from 'events'
-import { __dirname } from "../../dirname.js"
-import fs               from "fs"
-import requireIndex     from '../../lib/ri.js'
+import { EventEmitter } from 'node:events'
+import { __dirname }    from "../../dirname.js"
+import fs               from "node:fs"
+// import requireIndex  from '../../lib/ri.js'
 import Logger           from 'js-logger'
-import crypto           from 'crypto'
+import crypto           from 'node:crypto'
 import MD5              from 'md5.js'
-import zlib             from 'zlib'
+import zlib             from 'node:zlib'
 
 export let server = (server, options) => {
     server.pid = process.pid

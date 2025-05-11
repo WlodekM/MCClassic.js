@@ -1,6 +1,13 @@
 import World from '../world.js'
 import Vec3 from 'vec3'
-import fs from 'fs'
+import fs from 'node:fs'
+
+/*
+    World (different from world)
+
+    this file manadges different worlds
+
+    */
 
 export let server = async (server) => {
     server.worlds = {}
@@ -9,6 +16,9 @@ export let server = async (server) => {
     //     y: 64,
     //     z: 256
     // }, './levels/level.dat')
+
+    if(!fs.existsSync("levels")) fs.mkdirSync("levels");
+    if(!fs.existsSync("levels/main.dat")) fs.writeFileSync("levels/main.dat", "");
 
     let levels = fs.readdirSync("levels")
 
@@ -26,7 +36,7 @@ export let server = async (server) => {
     function loadLevel(levelName) {
         server.worlds[levelName].load()
             .then(() => { })
-            .catch(async () => {
+            .catch(async () => { // create world if there isnt one already
                 for (let x = 0; x < server.worlds[levelName].size.x; x++) {
                     for (let y = 0; y <= (server.worlds[levelName].size.y / 2); y++) {
                         for (let z = 0; z < server.worlds[levelName].size.z; z++) {
@@ -47,5 +57,5 @@ export let server = async (server) => {
             })
     }
 
-    loadLevel('main')
+    loadLevel('main') // load main world
 }

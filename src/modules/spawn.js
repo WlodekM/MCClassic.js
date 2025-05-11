@@ -12,6 +12,30 @@ export let player = (player, server) => {
     yaw = coords[3]
     pitch = coords[4]
 
+    player.spawnAgain = () => {
+        player._client.write('spawn_player', {
+            player_id: -1,
+            player_name: player._client.username,
+            x: player.pos.x,
+            y: player.pos.y,
+            z: player.pos.z,
+            yaw: player.yaw,
+            pitch: player.pitch
+        })
+
+        server.players.forEach((_player) => {
+            _player._client.write('spawn_player', {
+                player_id: server.entityID,
+                player_name: player._client.username,
+                x: player.pos.x,
+                y: player.pos.y,
+                z: player.pos.z,
+                yaw: player.yaw,
+                pitch: player.pitch
+            })
+        })
+    }
+
     player.spawn = () => {
         player.pos = new Vec3(x, y, z)
         player.yaw = yaw

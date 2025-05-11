@@ -3,7 +3,7 @@
 import {
     createServer
 } from './client.js'
-import fs from 'fs'
+import fs from 'node:fs'
 import ini from 'ini'
 
 const config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))

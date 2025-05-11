@@ -1,13 +1,14 @@
-import { createServer as createServerMCP } from 'minecraft-classic-protocol';
+import mcp from 'minecraft-classic-protocol';
+const createServerMCP = mcp.createServer
 import {
     protocol
 } from 'minecraft-classic-protocol-extension'
 import {
     join,
-} from 'path'
+} from 'node:path'
 import { __dirname } from "./dirname.js"
 
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'node:events'
 import requireIndex from './lib/ri.js'
 
 export let createServer = async (options = {}) => {

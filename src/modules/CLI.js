@@ -1,4 +1,4 @@
-import readline from "readline"
+import readline from 'node:readline'
 
 export let server = (server) => {
     const readlineInterface = readline.createInterface({

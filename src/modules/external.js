@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import { __dirname } from "../../dirname.js"
-import { pathToFileURL } from 'url';
+import { pathToFileURL } from 'node:url';
 /**
  * Converts an absolute file path to a file URI.
  * @param {string} filePath - The absolute file path to convert.
